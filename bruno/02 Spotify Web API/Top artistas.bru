@@ -1,0 +1,24 @@
+meta {
+  name: Top artistas
+  type: http
+  seq: 7
+}
+
+get {
+  url: {{spotifyApiUrl}}/me/top/artists?time_range=short_term&limit=20
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{spotifyAccessToken}}
+}
+
+params:query {
+  time_range: short_term
+  limit: 20
+}
+
+docs {
+  Opcional: comparar o top do Spotify com o nosso. time_range: short_term (~4 semanas), medium_term (~6 meses), long_term.
+}

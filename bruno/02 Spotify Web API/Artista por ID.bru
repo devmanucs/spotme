@@ -1,0 +1,19 @@
+meta {
+  name: Artista por ID
+  type: http
+  seq: 6
+}
+
+get {
+  url: {{spotifyApiUrl}}/artists/{{artistId}}
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{spotifyAccessToken}}
+}
+
+docs {
+  Foto do artista. Conferir se `genres`/`popularity` ainda vêm no modo dev.
+}

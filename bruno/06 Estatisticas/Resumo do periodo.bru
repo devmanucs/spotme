@@ -1,0 +1,24 @@
+meta {
+  name: Resumo do periodo
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}/api/stats/summary?p={{period}}&d={{periodDate}}
+  body: none
+  auth: inherit
+}
+
+params:query {
+  p: {{period}}
+  d: {{periodDate}}
+}
+
+assert {
+  res.status: eq 200
+}
+
+docs {
+  Tempo ouvido, reproduções contabilizadas, músicas/artistas distintos, média por dia e se há estimativa. p = today | week | month | year | custom (com from/to).
+}

@@ -1,7 +1,7 @@
 # Stack — decisão
 
-Status: **proposta** (2026-11-03). Mudou de ideia? Edite este arquivo e registre o
-porquê na seção "Histórico".
+Status: **decidida** (2026-11-03) — alternativa B. Mudou de ideia? Edite este
+arquivo e registre o porquê na seção "Histórico".
 
 ## O que o problema exige
 
@@ -104,3 +104,9 @@ O stack do flux-finance, copiado.
 ## Histórico
 
 - 2026-11-03 — proposta inicial.
+- 2026-11-03 — **alternativa B aprovada**: pnpm + Turborepo, Next.js 16,
+  Tailwind v4 + shadcn/Base UI + HugeIcons + Recharts, Supabase Postgres, zod,
+  Vercel; novos: Drizzle, Supabase Edge Functions + pg_cron + Queues; sem
+  NestJS. Testes de API manuais com **Bruno** (coleção em `bruno/`).
+  Identidade visual: estilo Spotify, tema único escuro (ver `DESIGN.md`) —
+  `next-themes` sai do stack.

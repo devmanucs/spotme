@@ -51,7 +51,7 @@ text (oklch) · `enriched_at`.
 
 ### `artists`
 
-`id` text PK · `name` · `image_path` · `genres` text[] null (pode não vir no modo
+`id` text PK · `name` · `image_path` · `dominant_color` text (oklch) · `genres` text[] null (pode não vir no modo
 dev; não depender disso) · `enriched_at`.
 
 ### `track_artists`

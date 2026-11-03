@@ -1,0 +1,40 @@
+meta {
+  name: 2 Trocar code por token
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{spotifyAccountsUrl}}/api/token
+  body: formUrlEncoded
+  auth: basic
+}
+
+auth:basic {
+  username: {{spotifyClientId}}
+  password: {{spotifyClientSecret}}
+}
+
+body:form-urlencoded {
+  grant_type: authorization_code
+  code: {{spotifyAuthCode}}
+  redirect_uri: {{spotifyRedirectUri}}
+}
+
+script:post-response {
+  // Guarda os tokens no ambiente (como segredo): a pasta 02 usa {{spotifyAccessToken}}.
+  if (res.status === 200) {
+    bru.setEnvVar("spotifyAccessToken", res.body.access_token);
+    bru.setEnvVar("spotifyRefreshToken", res.body.refresh_token);
+    bru.setEnvVar("spotifyAuthCode", "");
+  }
+}
+
+assert {
+  res.status: eq 200
+  res.body.refresh_token: isString
+}
+
+docs {
+  Troca o code por access token (1 h) + refresh token. Confira em `res.body.scope` os scopes realmente concedidos — anote no Spike 0.1.
+}

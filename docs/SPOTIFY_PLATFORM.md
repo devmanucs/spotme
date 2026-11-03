@@ -70,7 +70,7 @@ O Spotify é bloqueado na rede da empresa. O SpotMe **não contorna isso**:
 - Coletor: roda na nuvem; não depende de onde ela está.
 - Player (Fase 2): só funciona onde os domínios do Spotify forem acessíveis.
   O Spike 2.0 lista os domínios que o SDK usa, para saber onde ele roda — não
-  para burlar bloqueio. Se estiver bloqueado, o `PlayerDock` simplesmente não
+  para burlar bloqueio. Se estiver bloqueado, o `NowPlayingBar` simplesmente não
   aparece (detectar falha do SDK e esconder com mensagem clara).
 
 ## Diretrizes de uso de conteúdo

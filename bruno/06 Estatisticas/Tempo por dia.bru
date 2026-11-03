@@ -1,0 +1,24 @@
+meta {
+  name: Tempo por dia
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{baseUrl}}/api/stats/daily?from=2026-11-01&to=2026-11-30
+  body: none
+  auth: inherit
+}
+
+params:query {
+  from: 2026-11-01
+  to: 2026-11-30
+}
+
+assert {
+  res.status: eq 200
+}
+
+docs {
+  Série diária para o ListeningChart (dia civil no fuso da usuária).
+}

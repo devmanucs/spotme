@@ -1,0 +1,23 @@
+meta {
+  name: Me
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}/api/me
+  body: none
+  auth: inherit
+}
+
+assert {
+  res.status: eq 200
+}
+
+docs {
+  Conta conectada, status (`ok` / `needs_reauth`) e fuso.
+
+  Como obter {{supabaseAccessToken}}: o login do SpotMe é OAuth do Spotify via Supabase Auth, então não há rota de senha.
+  Faça login no navegador, abra DevTools → Application → Cookies (ou Local Storage) → `sb-<ref>-auth-token`,
+  copie o `access_token` do JSON e cole na variável secreta. Ele expira em ~1 h.
+}

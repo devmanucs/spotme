@@ -1,0 +1,19 @@
+meta {
+  name: Album por ID
+  type: http
+  seq: 5
+}
+
+get {
+  url: {{spotifyApiUrl}}/albums/{{albumId}}
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{spotifyAccessToken}}
+}
+
+docs {
+  Capa (images[]) e release_date para o cache de capas.
+}

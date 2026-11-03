@@ -1,0 +1,23 @@
+meta {
+  name: Spotify token invalido (401)
+  type: http
+  seq: 4
+}
+
+get {
+  url: {{spotifyApiUrl}}/me
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: token-invalido
+}
+
+assert {
+  res.status: eq 401
+}
+
+docs {
+  Formato do erro da Web API ({ error: { status, message } }) — o cliente em packages/spotify deve tratar isso renovando o token uma vez.
+}

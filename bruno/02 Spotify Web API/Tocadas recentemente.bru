@@ -1,0 +1,36 @@
+meta {
+  name: Tocadas recentemente
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{spotifyApiUrl}}/me/player/recently-played?limit=50
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{spotifyAccessToken}}
+}
+
+params:query {
+  limit: 50
+}
+
+script:post-response {
+  // cursors.after = played_at mais recente em ms; é o cursor do coletor.
+  if (res.status === 200 && res.body.cursors) {
+    bru.setEnvVar("recentCursorMs", res.body.cursors.after);
+  }
+  if (res.status === 200 && res.body.items && res.body.items.length) {
+    const t = res.body.items[0].track;
+    bru.setEnvVar("trackId", t.id);
+    bru.setEnvVar("albumId", t.album.id);
+    bru.setEnvVar("artistId", t.artists[0].id);
+  }
+}
+
+docs {
+  O que o collect-recent chama. Máximo 50 itens (~3 h de escuta). Spike 0.1: confirmar que segue disponível no modo dev. Spike 0.2: comparar `played_at` com o `ts` do Extended History (início ou fim?). O script salva o cursor para a próxima requisição.
+}

@@ -79,6 +79,7 @@ spotme/
 │       ├── collect-recent/      # importa de ../../packages/spotify e ../../packages/core
 │       ├── enrich-worker/
 │       └── _shared/
+├── bruno/                       # coleção Bruno: rotas do SpotMe, Edge Functions, Web API do Spotify
 ├── docs/
 ├── PRODUCT.md
 └── DESIGN.md
@@ -129,7 +130,8 @@ spotme/
 2. Em `/importar`, ela arrasta o zip ou os `Streaming_History_Audio_*.json`.
 3. Um **Web Worker** no navegador descompacta, valida com zod (schemas em
    `packages/core/import`), **descarta `ip_addr`** e campos que não usamos, e
-   manda lotes de ~2 000 linhas para `POST /api/import/batches`.
+   abre um job (`POST /api/import/jobs`) e manda lotes de ~2 000 linhas para
+   `POST /api/import/jobs/:id/batches`; no fim, `POST /api/import/jobs/:id/finish`.
 4. O Route Handler, numa transação por lote:
    - cria tracks "stub" a partir de `spotify_track_uri` + nomes em texto;
    - insere `plays` com `source='extended_history'`, `ms_played` exato;
@@ -151,7 +153,8 @@ Reimportar o mesmo arquivo é seguro (idempotente).
   visibilidade atrasada e encerra a execução.
 - Ao enriquecer um álbum: baixa a capa (300 px e 640 px), salva em
   `storage/covers/{album_id}_{size}.jpg`, extrai a cor dominante e grava em
-  `albums.dominant_color`.
+  `albums.dominant_color` (o mesmo para fotos de artista → `artists.dominant_color`),
+  com luminosidade limitada a L 0.35–0.55 para o degradê do `PageHero`.
 
 ### 5. Agregações
 
@@ -181,6 +184,38 @@ vínculo, gera candidatos no YouTube (busca, consumindo quota) → match
 automático só acima de um limiar de confiança; o resto vai para
 `yt_match_reviews` (tela de conflitos) → insere nas playlists espelho
 respeitando a quota diária, continuando no dia seguinte se acabar.
+
+## API HTTP
+
+As telas leem dados via RSC (queries em `apps/web/src/server/`). As rotas
+abaixo existem para o que RSC não cobre (upload, callbacks, cron) e, no caso de
+`/api/stats/*`, como **wrappers finos das mesmas queries** — para depurar e
+testar no Bruno sem abrir o navegador. Todas aceitam o cookie de sessão do
+Supabase **ou** `Authorization: Bearer <access token do Supabase>`.
+
+| Método e rota | Fase | Para quê |
+|---|---|---|
+| `GET /api/health` | 0 | Status do app e do banco (sem auth) |
+| `GET /auth/callback` | 1 | Callback do Supabase Auth (allowlist + refresh token no Vault) |
+| `GET /api/me` | 1 | Conta conectada, `status`, fuso |
+| `POST /api/import/jobs` | 1 | Abre um `import_job` (arquivos, total de linhas) |
+| `POST /api/import/jobs/:id/batches` | 1 | Envia um lote (≤ 2 000 linhas, schema zod de `packages/core/import`) |
+| `POST /api/import/jobs/:id/finish` | 1 | Fecha o job, roda dedup + refresh das views |
+| `GET /api/import/jobs/:id` | 1 | Progresso e resumo |
+| `GET /api/stats/summary?p=&d=` | 1 | Tempo ouvido, reproduções, distintos, média/dia do período |
+| `GET /api/stats/daily?from=&to=` | 1 | Série por dia |
+| `GET /api/stats/top-artists?p=&d=&limit=` | 1 | Ranking de artistas |
+| `GET /api/stats/top-tracks?p=&d=&limit=` | 1 | Ranking de músicas |
+| `GET /api/plays?cursor=&limit=` | 1 | Histórico paginado |
+| `GET /api/collector/status` | 1 | Última coleta, lacunas, `collector_runs` recentes |
+| `GET /api/spotify/token` | 2 | Access token curto para o Web Playback SDK |
+| `POST /api/player/events` | 2 | Segmentos tocados no player |
+
+Edge Functions (chamadas pelo cron; header `x-cron-secret`):
+`POST /functions/v1/collect-recent` · `POST /functions/v1/enrich-worker`.
+
+A coleção do Bruno em [`bruno/`](../bruno) cobre todas essas rotas, mais a Web
+API do Spotify direto (útil nos spikes).
 
 ## Segurança e privacidade
 

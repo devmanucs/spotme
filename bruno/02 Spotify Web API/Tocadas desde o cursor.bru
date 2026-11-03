@@ -1,0 +1,24 @@
+meta {
+  name: Tocadas desde o cursor
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{spotifyApiUrl}}/me/player/recently-played?limit=50&after={{recentCursorMs}}
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{spotifyAccessToken}}
+}
+
+params:query {
+  limit: 50
+  after: {{recentCursorMs}}
+}
+
+docs {
+  Só o que tocou depois de {{recentCursorMs}} — exatamente a chamada incremental do coletor. Vazio = nada novo.
+}

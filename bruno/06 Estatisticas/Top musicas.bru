@@ -1,0 +1,25 @@
+meta {
+  name: Top musicas
+  type: http
+  seq: 4
+}
+
+get {
+  url: {{baseUrl}}/api/stats/top-tracks?p={{period}}&d={{periodDate}}&limit=10
+  body: none
+  auth: inherit
+}
+
+params:query {
+  p: {{period}}
+  d: {{periodDate}}
+  limit: 10
+}
+
+assert {
+  res.status: eq 200
+}
+
+docs {
+  Ranking por reproduções contabilizadas, desempate por tempo ouvido.
+}

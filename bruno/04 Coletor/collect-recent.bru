@@ -1,0 +1,28 @@
+meta {
+  name: collect-recent
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{supabaseUrl}}/functions/v1/collect-recent
+  body: json
+  auth: none
+}
+
+headers {
+  x-cron-secret: {{cronSecret}}
+}
+
+body:json {
+  {}
+}
+
+assert {
+  res.status: eq 200
+}
+
+docs {
+  Roda uma coleta agora (o mesmo que o pg_cron faz a cada 20 min). Resposta: itens buscados, inseridos e se detectou lacuna.
+  Local: `pnpm supabase functions serve` antes.
+}

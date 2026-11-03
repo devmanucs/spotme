@@ -1,0 +1,29 @@
+meta {
+  name: 1 Autorizar (abrir no navegador)
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{spotifyAccountsUrl}}/authorize?client_id={{spotifyClientId}}&response_type=code&redirect_uri={{spotifyRedirectUri}}&scope=user-read-recently-played%20user-read-private%20user-top-read%20streaming%20user-read-playback-state%20user-modify-playback-state%20user-read-currently-playing%20playlist-read-private%20playlist-read-collaborative
+  body: none
+  auth: none
+}
+
+params:query {
+  client_id: {{spotifyClientId}}
+  response_type: code
+  redirect_uri: {{spotifyRedirectUri}}
+  scope: user-read-recently-played%20user-read-private%20user-top-read%20streaming%20user-read-playback-state%20user-modify-playback-state%20user-read-currently-playing%20playlist-read-private%20playlist-read-collaborative
+}
+
+docs {
+  NÃO adianta rodar aqui: o consentimento é interativo.
+  1. Copie a URL desta requisição (com as variáveis resolvidas) e abra no navegador.
+  2. Aceite. O Spotify redireciona para {{spotifyRedirectUri}}?code=XXXX — a página vai dar erro (não tem nada ouvindo), tudo bem.
+  3. Copie o valor de `code` da barra de endereço para a variável {{spotifyAuthCode}}.
+  4. Rode "2 Trocar code por token" em até ~10 min (o code expira e só vale uma vez).
+
+  Pré-requisito: {{spotifyRedirectUri}} cadastrado nas Redirect URIs do app no Spotify for Developers
+  (o Spotify só aceita http para IP de loopback, por isso 127.0.0.1 e não localhost).
+}

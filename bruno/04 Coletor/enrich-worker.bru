@@ -1,0 +1,28 @@
+meta {
+  name: enrich-worker
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{supabaseUrl}}/functions/v1/enrich-worker
+  body: json
+  auth: none
+}
+
+headers {
+  x-cron-secret: {{cronSecret}}
+}
+
+body:json {
+  {}
+}
+
+assert {
+  res.status: eq 200
+}
+
+docs {
+  Processa um pedaço da fila `enrich` agora. Resposta: mensagens processadas, restantes e se parou por 429.
+  Local: `pnpm supabase functions serve` antes.
+}

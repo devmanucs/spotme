@@ -1,0 +1,25 @@
+meta {
+  name: Top artistas
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{baseUrl}}/api/stats/top-artists?p={{period}}&d={{periodDate}}&limit=10
+  body: none
+  auth: inherit
+}
+
+params:query {
+  p: {{period}}
+  d: {{periodDate}}
+  limit: 10
+}
+
+assert {
+  res.status: eq 200
+}
+
+docs {
+  Ranking por tempo ouvido, desempate por reproduções (regra em PRODUCT.md).
+}

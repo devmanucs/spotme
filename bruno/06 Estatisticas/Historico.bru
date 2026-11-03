@@ -1,0 +1,23 @@
+meta {
+  name: Historico
+  type: http
+  seq: 5
+}
+
+get {
+  url: {{baseUrl}}/api/plays?limit=50
+  body: none
+  auth: inherit
+}
+
+params:query {
+  limit: 50
+}
+
+assert {
+  res.status: eq 200
+}
+
+docs {
+  Histórico paginado (mais recente primeiro). Use `nextCursor` da resposta em `cursor`.
+}

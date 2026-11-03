@@ -1,0 +1,19 @@
+meta {
+  name: Faixa por ID
+  type: http
+  seq: 4
+}
+
+get {
+  url: {{spotifyApiUrl}}/tracks/{{trackId}}
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{spotifyAccessToken}}
+}
+
+docs {
+  Enriquecimento (1 request por ID; sem lote no modo dev). Spike 0.1: medir quantas dessas seguidas até o primeiro 429 e o Retry-After.
+}

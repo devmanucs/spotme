@@ -1,0 +1,19 @@
+meta {
+  name: Perfil
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{spotifyApiUrl}}/me
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{spotifyAccessToken}}
+}
+
+docs {
+  ID do usuário (vai para ALLOWED_SPOTIFY_USER_ID) e `product` — precisa ser `premium` para o modo dev e para o player.
+}

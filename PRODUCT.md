@@ -76,27 +76,31 @@ Definições fixas para que todo gráfico conte do mesmo jeito.
 
 ## Brand Personality
 
-Pessoal, curioso, um pouco nerd de música. Tem cara de **caderno de escuta** —
-um diário que se escreve sozinho — e não de painel corporativo. Os números são
-o centro, mas a capa dos álbuns traz a cor e a emoção.
+Despojado, autêntico, **com a cara do Spotify**. Abrir o SpotMe tem que dar a
+sensação de estar no app do Spotify — moldura escura, capas grandes,
+tipografia em negrito, verde só na ação — só que mostrando os próprios números.
+Pessoal e um pouco nerd de música: os números são o centro, a capa dos álbuns
+traz a cor e a emoção.
 
-**Identidade própria, não um clone do Spotify**: sem verde Spotify como cor de
-marca, sem imitar o layout do app oficial. O Spotify aparece só onde as regras
-de uso da plataforma exigem (atribuição, logo ao lado de conteúdo, link
-"Abrir no Spotify").
+O logo do Spotify aparece só como atribuição (ao lado de conteúdo, link
+"Abrir no Spotify"); o SpotMe tem nome e marca própria dentro desse visual.
 
-> Nota de nome: "SpotMe" serve para uso pessoal. Se o projeto um dia for
-> público/distribuído, rever o nome — as diretrizes do Spotify vetam nomes que
-> possam ser confundidos com a marca.
+> Nota: identidade e nome ("SpotMe") colados no Spotify são escolha
+> consciente para um projeto **pessoal e privado**. Se um dia ele for
+> público/distribuído, rever os dois — as diretrizes do Spotify vetam apps e
+> nomes que possam ser confundidos com o próprio Spotify.
 
 ## Anti-references
 
-- **Clone do Spotify**: fundo `#121212`, verde `#1DB954`, sidebar de
-  biblioteca. É outra coisa, e copiar a marca deles viola as diretrizes.
-- **Spotify Wrapped em versão SaaS**: slides animados de "story" para tudo,
-  confete, gradiente em texto. Retrospectiva é para explorar, não para assistir.
 - **Painel de analytics genérico**: grid de cards idênticos com ícone + número
-  + "+12% vs. último mês" em verde para tudo.
+  + "+12% vs. último mês" em verde para tudo. No SpotMe os números vivem em
+  cabeçalhos de página e prateleiras, como o conteúdo vive no Spotify.
+- **Spotify "de mentira"**: copiar só a cor (fundo escuro + verde) e manter
+  layout de SaaS. Se é para ter a cara do Spotify, é a linguagem inteira:
+  cabeçalho com degradê, prateleiras, tabela de faixas, barra no rodapé.
+- **Wrapped para tudo**: slides animados e confete no dashboard do dia a dia.
+  A estética "Wrapped" (blocos de cor, tipografia gigante) fica restrita à
+  retrospectiva anual.
 - **Planilha disfarçada**: tabelas cruas com 50 linhas sem hierarquia.
 
 ## Design Principles
@@ -112,7 +116,8 @@ de uso da plataforma exigem (atribuição, logo ao lado de conteúdo, link
 4. **Zero manutenção diária.** Depois do login e da importação inicial, o
    produto se mantém sozinho. Qualquer ação manual recorrente é bug de produto.
 5. **Um design system, não uma vitrine.** Reusa os componentes/tokens de
-   `packages/ui`; dark e light com o mesmo cuidado.
+   `packages/ui`; tema único escuro, como o Spotify — nenhuma tela inventa
+   estilo próprio.
 
 ## Accessibility & Inclusion
 

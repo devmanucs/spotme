@@ -1,0 +1,23 @@
+meta {
+  name: Cron sem segredo (401)
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{supabaseUrl}}/functions/v1/collect-recent
+  body: json
+  auth: none
+}
+
+body:json {
+  {}
+}
+
+assert {
+  res.status: eq 401
+}
+
+docs {
+  Sem x-cron-secret a Edge Function não pode rodar.
+}

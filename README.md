@@ -18,13 +18,15 @@ ouço, importa o histórico completo e mostra horas ouvidas, rankings e evoluç�
 | [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) | Diagrama, monorepo, fluxos (login, coleta, import, enriquecimento, player, sync), segurança, env vars |
 | [`docs/DATA_MODEL.md`](docs/DATA_MODEL.md) | Tabelas, views, regras de estimativa e deduplicação |
 | [`docs/SPOTIFY_PLATFORM.md`](docs/SPOTIFY_PLATFORM.md) | Limites do modo dev (2026), endpoints, scopes, riscos, spikes |
-| [`docs/ROADMAP.md`](docs/ROADMAP.md) | Fases 0–3 ligadas ao backlog do Linear |
+| [`docs/ROADMAP.md`](docs/ROADMAP.md) | Fases 0–3 ligadas às issues do Linear |
+| [`bruno/`](bruno) | Coleção Bruno: rotas do SpotMe, Edge Functions e Web API do Spotify |
 
 ## Stack (resumo)
 
 pnpm + Turborepo · Next.js 16 (RSC) · Tailwind v4 + shadcn/Base UI + HugeIcons +
 Recharts · Supabase (Postgres, Auth, Vault, Storage, Queues, pg_cron, Edge
-Functions) · Drizzle · zod · Vitest + Playwright · Vercel.
+Functions) · Drizzle · zod · Vitest + Playwright · Bruno · Vercel.
+Visual: linguagem do Spotify desktop, tema único escuro ([`DESIGN.md`](DESIGN.md)).
 
 ## Rodar localmente
 

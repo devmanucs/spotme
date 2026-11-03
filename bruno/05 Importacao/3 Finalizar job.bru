@@ -1,0 +1,19 @@
+meta {
+  name: 3 Finalizar job
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{baseUrl}}/api/import/jobs/{{importJobId}}/finish
+  body: none
+  auth: inherit
+}
+
+assert {
+  res.status: eq 200
+}
+
+docs {
+  Fecha o job: roda dedupe_plays no intervalo importado e atualiza as views materializadas.
+}

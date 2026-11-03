@@ -1,0 +1,27 @@
+meta {
+  name: Lote invalido (400)
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{baseUrl}}/api/import/jobs/{{importJobId}}/batches
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "rows": [
+      { "ts": "ontem", "msPlayed": -5, "ip_addr": "10.0.0.1" }
+    ]
+  }
+}
+
+assert {
+  res.status: eq 400
+}
+
+docs {
+  ts inválido, msPlayed negativo, sem trackUri e com ip_addr (campo proibido: o schema é strict). O erro deve dizer o caminho de cada problema (zod).
+}

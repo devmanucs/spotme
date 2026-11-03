@@ -1,0 +1,16 @@
+auth {
+  mode: bearer
+}
+
+auth:bearer {
+  token: {{supabaseAccessToken}}
+}
+
+headers {
+  Accept: application/json
+}
+
+docs {
+  Coleção do SpotMe. Por padrão tudo usa Bearer {{supabaseAccessToken}} (sessão do SpotMe).
+  As pastas do Spotify e das Edge Functions sobrescrevem a auth. Veja bruno/README.md.
+}

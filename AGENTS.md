@@ -20,6 +20,9 @@
 - `packages/core` e `packages/spotify` não usam APIs de Node (rodam em Deno).
 - Requests ao Spotify: um por ID (sem lote), respeitar `Retry-After` em `429`.
 - `ip_addr` do Extended History nunca sai do navegador.
+- Rota HTTP nova ou alterada → atualizar a coleção em `bruno/` no mesmo PR.
+- Visual: tema único escuro estilo Spotify; verde (`--primary`) só em
+  ação/ativo/progresso. Siga o checklist de `DESIGN.md`.
 
 ## Verificação
 

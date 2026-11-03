@@ -1,0 +1,19 @@
+meta {
+  name: Health
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}/api/health
+  body: none
+  auth: none
+}
+
+assert {
+  res.status: eq 200
+}
+
+docs {
+  Status do app e do banco. Sem auth. Primeira coisa a testar depois de `pnpm dev`.
+}

@@ -1,0 +1,56 @@
+meta {
+  name: 2 Enviar lote
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{baseUrl}}/api/import/jobs/{{importJobId}}/batches
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "rows": [
+      {
+        "ts": "2025-03-14T22:41:05Z",
+        "msPlayed": 211640,
+        "trackUri": "spotify:track:4cOdK2wGLETKBW3PvgPWqT",
+        "trackName": "Never Gonna Give You Up",
+        "artistName": "Rick Astley",
+        "albumName": "Whenever You Need Somebody",
+        "platform": "android",
+        "reasonStart": "trackdone",
+        "reasonEnd": "trackdone",
+        "shuffle": false,
+        "skipped": false,
+        "offline": false
+      },
+      {
+        "ts": "2025-03-14T22:42:10Z",
+        "msPlayed": 12000,
+        "trackUri": "spotify:track:4cOdK2wGLETKBW3PvgPWqT",
+        "trackName": "Never Gonna Give You Up",
+        "artistName": "Rick Astley",
+        "albumName": "Whenever You Need Somebody",
+        "platform": "windows",
+        "reasonStart": "clickrow",
+        "reasonEnd": "fwdbtn",
+        "shuffle": true,
+        "skipped": true,
+        "offline": false
+      }
+    ]
+  }
+}
+
+assert {
+  res.status: eq 200
+}
+
+docs {
+  Linha já normalizada pelo navegador (camelCase, sem ip_addr/conn_country). Schema em packages/core/import.
+  Resposta: inseridas, duplicadas, ignoradas. Rodar duas vezes deve dar 0 inseridas na segunda (idempotência).
+  A segunda linha tem 12 s: entra no tempo ouvido, mas não conta como reprodução (< 30 s).
+}

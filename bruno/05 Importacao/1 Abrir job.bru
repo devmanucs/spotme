@@ -1,0 +1,32 @@
+meta {
+  name: 1 Abrir job
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{baseUrl}}/api/import/jobs
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "files": ["Streaming_History_Audio_2024-2025_3.json"],
+    "rowsTotal": 2
+  }
+}
+
+script:post-response {
+  if (res.status === 201) {
+    bru.setEnvVar("importJobId", res.body.id);
+  }
+}
+
+assert {
+  res.status: eq 201
+}
+
+docs {
+  Abre um import_job. No app real quem faz isso é o Web Worker de /importar.
+}
