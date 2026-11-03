@@ -1,0 +1,2 @@
+-- Seed de desenvolvimento (rodado por `pnpm db:reset`).
+-- Reproduções falsas para o dashboard entram aqui na MAD-21.

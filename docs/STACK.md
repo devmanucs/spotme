@@ -43,7 +43,7 @@ anteriores (flux-finance, goals-tracker):
 | Arquivos | **Supabase Storage** | ✅ | Cache de capas e upload dos JSONs do Extended History. |
 | Validação | **zod** | ✅ | Contratos entre web, jobs e parsers do import. |
 | Testes | **Vitest** (core, parsers, agregações contra Postgres local) + **Playwright** (fluxos críticos) | ✅ | |
-| Lint/format | **Biome** | 🆕 | Um binário só no lugar de ESLint + Prettier. Opcional — se der atrito com regras do Next, volta para ESLint. |
+| Lint/format | **Biome** | 🆕 | Um binário só no lugar de ESLint + Prettier. O `create-next-app` 16 já oferece Biome com os domínios `next` e `react`, e o Next 16 não tem mais `next lint`. |
 | Deploy | **Vercel** (web) + **Supabase** (banco, jobs, storage) | ✅ | Dois painéis, zero servidor para manter. |
 | Local | **Supabase CLI** (`supabase start`, Docker) | ✅ | Postgres, Auth, Edge Functions e cron locais. |
 
@@ -99,7 +99,6 @@ O stack do flux-finance, copiado.
 |---|---|---|
 | Como falar com o YouTube Music | Spike da Fase 3 | **YouTube Data API v3** (oficial; YouTube Music usa playlists do YouTube; ~10 000 unidades/dia, `playlistItems.insert` = 50 e `search.list` = 100 → ~200 inserções ou ~100 buscas por dia) vs. `ytmusicapi` (não oficial, Python, sem quota mas pode quebrar/violar termos). Se for `ytmusicapi`, aí sim entra um worker Python (alternativa D) num host pago pequeno. |
 | Precisa de Redis/cache? | Se o dashboard ficar lento | Primeiro: views materializadas + índices. Redis só com evidência. |
-| Biome vs ESLint | Primeira semana | Fica com o que der menos atrito com o Next 16. |
 
 ## Histórico
 
@@ -110,3 +109,10 @@ O stack do flux-finance, copiado.
   NestJS. Testes de API manuais com **Bruno** (coleção em `bruno/`).
   Identidade visual: estilo Spotify, tema único escuro (ver `DESIGN.md`) —
   `next-themes` sai do stack.
+- 2026-11-03 — MAD-17 (monorepo): **Biome** escolhido (vem no template do
+  Next 16, regras `next`/`react`). Versões fixadas: Next 16.4.4, React 19.3,
+  TypeScript 5.x (o 7.x nativo ainda não foi validado com o Next), Vitest 4,
+  Drizzle 0.45 + drizzle-kit 0.31, postgres-js 3.4, Turbo 2.11, Deno 2.9 e
+  Supabase CLI 3.0 como devDependencies. Pacotes internos são consumidos como
+  código-fonte TS (sem build), com imports relativos terminando em `.ts` para
+  o Deno também conseguir ler.

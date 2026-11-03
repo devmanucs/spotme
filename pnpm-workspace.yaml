@@ -1,0 +1,12 @@
+packages:
+  - apps/*
+  - packages/*
+
+onlyBuiltDependencies:
+  - deno
+  - esbuild
+  - supabase
+
+ignoredBuiltDependencies:
+  - sharp
+  - unrs-resolver

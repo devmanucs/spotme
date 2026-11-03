@@ -88,6 +88,20 @@ spotme/
 `packages/core` e `packages/spotify` **não podem** depender de APIs de Node
 (fs, Buffer…) — são importados também pelas Edge Functions (Deno).
 
+Como isso funciona na prática:
+
+- Pacotes internos são **código-fonte TS sem build** (`exports` aponta para
+  `src/index.ts`). O Next compila via Turbopack; o Vitest roda direto.
+- Imports relativos dentro dos pacotes terminam em **`.ts`**
+  (`allowImportingTsExtensions`), para o Deno ler os mesmos arquivos.
+- As Edge Functions importam tudo por `supabase/functions/_shared/workspace.ts`.
+  `pnpm check:deno` faz `deno check` + `deno test` nesse ponto de entrada.
+- `packages/core` e `packages/spotify` usam o tsconfig `library.json`
+  (`types: []`): um `import "node:fs"` quebra o typecheck.
+- ⚠️ A validar na MAD-16: se o `supabase functions deploy` empacota imports
+  de fora de `supabase/` (`../../../packages`). Se não, um script copia os
+  pacotes para `supabase/functions/_shared/` antes do deploy.
+
 ## Fluxos
 
 ### 1. Login e token

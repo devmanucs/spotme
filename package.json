@@ -1,0 +1,29 @@
+{
+  "name": "spotme",
+  "private": true,
+  "packageManager": "pnpm@10.28.0",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "typecheck": "turbo run typecheck",
+    "test": "turbo run test",
+    "lint": "biome check .",
+    "format": "biome check --write .",
+    "check:deno": "deno check supabase/functions && deno test supabase/functions",
+    "db:generate": "pnpm --filter @spotme/db db:generate",
+    "db:studio": "pnpm --filter @spotme/db db:studio",
+    "db:migrate": "supabase migration up",
+    "db:reset": "supabase db reset",
+    "supabase": "supabase"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.4.2",
+    "deno": "2.9.6",
+    "supabase": "3.0.0",
+    "turbo": "2.11.10",
+    "typescript": "^5"
+  }
+}

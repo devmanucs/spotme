@@ -1,0 +1,27 @@
+@import "tailwindcss";
+
+/* Componentes deste pacote também geram classes. */
+@source "../";
+
+/*
+ * Tokens do DESIGN.md (tema único escuro estilo Spotify) entram aqui na MAD-19.
+ * Por enquanto só o mínimo para o shell não nascer branco.
+ */
+@theme {
+  --color-background: oklch(0 0 0);
+  --color-card: oklch(0.182 0 0);
+  --color-foreground: oklch(1 0 0);
+  --color-muted-foreground: oklch(0.767 0 0);
+  --color-primary: oklch(0.77 0.212 148.7);
+  --color-primary-foreground: oklch(0 0 0);
+}
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+  }
+}

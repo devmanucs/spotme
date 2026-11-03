@@ -30,23 +30,75 @@ Visual: linguagem do Spotify desktop, tema único escuro ([`DESIGN.md`](DESIGN.m
 
 ## Rodar localmente
 
-_A preencher na Fase 0.4._ Prévia:
+Pré-requisitos: Node.js 22 (`.nvmrc`), pnpm 10 (`corepack enable`), Docker
+(para o Supabase local). Deno e Supabase CLI vêm como dependências do projeto.
 
-```bash
-pnpm install
+1. Instale as dependências:
+
+   ```bash
+   pnpm install
+   ```
+
+2. Suba o Supabase local (Postgres em `127.0.0.1:54322`, API em `:54321`):
+
+   ```bash
+   pnpm supabase start
+   ```
+
+3. Crie os arquivos de ambiente a partir dos exemplos e preencha as chaves que
+   `pnpm supabase status` mostrar:
+
+   ```bash
+   cp apps/web/.env.example apps/web/.env.local
+   ```
+
+   ```bash
+   cp packages/db/.env.example packages/db/.env
+   ```
+
+   ```bash
+   cp supabase/functions/.env.example supabase/functions/.env
+   ```
+
+4. Rode o app:
+
+   ```bash
+   pnpm dev
+   ```
+
+5. Confira `http://localhost:3000/api/health` (ou `bruno/00 Saude/Health`):
+   `200` com `database.status = "ok"`.
+
+### Scripts
+
+| Script | O que faz |
+|---|---|
+| `pnpm dev` | Next.js em modo dev (Turbopack) |
+| `pnpm build` | Build de produção |
+| `pnpm typecheck` | `tsc` em todos os pacotes (+ `next typegen` no web) |
+| `pnpm test` | Vitest em `packages/core` e `packages/spotify` |
+| `pnpm lint` / `pnpm format` | Biome (checar / corrigir) |
+| `pnpm check:deno` | `deno check` + `deno test` em `supabase/functions` (garante que `core` e `spotify` rodam no Deno) |
+| `pnpm db:generate` | Gera migration do schema Drizzle em `supabase/migrations/` |
+| `pnpm db:reset` | Recria o banco local aplicando migrations + `seed.sql` |
+| `pnpm db:migrate` | Aplica migrations pendentes no banco local |
+| `pnpm supabase …` | Supabase CLI do projeto |
+
+### Estrutura
+
 ```
-
-```bash
-pnpm supabase start
-```
-
-```bash
-pnpm dev
+apps/web            Next.js 16 (App Router, Cache Components, Tailwind v4)
+packages/core       regras de métrica — TS puro, roda em Node, navegador e Deno
+packages/spotify    cliente da Web API — TS puro, roda em Node e Deno
+packages/db         schema Drizzle + cliente postgres-js
+packages/ui         design system (tokens, cn, componentes)
+packages/config     tsconfigs compartilhados
+supabase/           config.toml, migrations, Edge Functions, seed
+bruno/              coleção de requisições
 ```
 
 ## Pré-requisitos
 
-- Node.js 20+, pnpm 10, Docker (Supabase local).
 - Conta Spotify **Premium** (exigida para apps em modo dev e para o player).
 - App criado no Spotify for Developers com redirect para o callback do
   Supabase Auth.
