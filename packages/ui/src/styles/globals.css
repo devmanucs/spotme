@@ -1,27 +1,175 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
 
-/* Componentes deste pacote também geram classes. */
-@source "../";
+/* Componentes deste pacote também geram classes (o Tailwind roda no app). */
+@source "../components/**/*.{ts,tsx}";
+@source "../hooks/**/*.{ts,tsx}";
+@source "../lib/**/*.{ts,tsx}";
 
 /*
- * Tokens do DESIGN.md (tema único escuro estilo Spotify) entram aqui na MAD-19.
- * Por enquanto só o mínimo para o shell não nascer branco.
+ * Tokens do SpotMe — DESIGN.md › Tokens.
+ * Tema único escuro, na linguagem do Spotify desktop. Nunca use cor literal em
+ * componente: use as classes geradas daqui (bg-card, text-muted-foreground…).
  */
-@theme {
-  --color-background: oklch(0 0 0);
-  --color-card: oklch(0.182 0 0);
-  --color-foreground: oklch(1 0 0);
-  --color-muted-foreground: oklch(0.767 0 0);
-  --color-primary: oklch(0.77 0.212 148.7);
-  --color-primary-foreground: oklch(0 0 0);
+:root {
+  color-scheme: dark;
+
+  /* Superfícies */
+  --background: oklch(0 0 0); /* #000 moldura */
+  --card: oklch(0.182 0 0); /* #121212 painéis */
+  --elevated: oklch(0.239 0 0); /* #1F1F1F card em repouso, busca, menus */
+  --highlight: oklch(0.285 0 0); /* #2A2A2A hover */
+  --pressed: oklch(0.364 0 0); /* #3E3E3E ativo, trilho de progresso */
+  --popover: oklch(0.255 0 0); /* #282828 menus e diálogos */
+
+  /* Texto */
+  --foreground: oklch(1 0 0);
+  --muted-foreground: oklch(0.767 0 0); /* #B3B3B3 */
+
+  /* Ação (verde só em ação/ativo/progresso) */
+  --primary: oklch(0.77 0.212 148.7); /* #1ED760 */
+  --primary-hover: oklch(0.82 0.2 148.7);
+  --primary-foreground: oklch(0 0 0);
+
+  /* Estados */
+  --destructive: oklch(0.708 0.159 15.8); /* #F3727F */
+  --warning: oklch(0.792 0.163 67.4); /* #FFA42B */
+  --info: oklch(0.688 0.15 254.2); /* #539DF5 */
+
+  /* Linhas e foco */
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(1 0 0);
+
+  /* Gráficos e heatmap */
+  --chart-1: var(--primary);
+  --chart-2: var(--info);
+  --chart-3: var(--warning);
+  --chart-4: var(--destructive);
+  --chart-5: oklch(0.72 0.09 310);
+  --heat-0: var(--elevated);
+  --heat-1: oklch(0.38 0.08 148.7);
+  --heat-2: oklch(0.52 0.13 148.7);
+  --heat-3: oklch(0.65 0.18 148.7);
+  --heat-4: var(--primary);
+
+  /* Cor dominante do cabeçalho (sobrescrita por página via style="--hero: …") */
+  --hero: oklch(0.35 0 0);
+
+  /* Raio */
+  --radius: 0.5rem; /* 8px painéis e cards */
+  --radius-cover: 4px; /* capas pequenas */
+  --radius-cover-lg: 6px; /* capas ≥ 160px */
+
+  /* Aliases esperados pelos primitivos shadcn */
+  --card-foreground: var(--foreground);
+  --popover-foreground: var(--foreground);
+  --secondary: var(--elevated);
+  --secondary-foreground: var(--foreground);
+  --muted: var(--elevated);
+  --accent: var(--highlight);
+  --accent-foreground: var(--foreground);
+}
+
+@theme inline {
+  --font-sans: var(--font-figtree), ui-sans-serif, system-ui, sans-serif;
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-elevated: var(--elevated);
+  --color-highlight: var(--highlight);
+  --color-pressed: var(--pressed);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-warning: var(--warning);
+  --color-info: var(--info);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-heat-0: var(--heat-0);
+  --color-heat-1: var(--heat-1);
+  --color-heat-2: var(--heat-2);
+  --color-heat-3: var(--heat-3);
+  --color-heat-4: var(--heat-4);
+
+  --radius-sm: calc(var(--radius) * 0.5);
+  --radius-md: calc(var(--radius) * 0.75);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.5);
+  --radius-2xl: calc(var(--radius) * 2);
+  --radius-cover: var(--radius-cover);
+  --radius-cover-lg: var(--radius-cover-lg);
 }
 
 @layer base {
-  :root {
-    color-scheme: dark;
+  * {
+    @apply border-border;
+  }
+
+  html {
+    @apply bg-background;
   }
 
   body {
-    @apply bg-background text-foreground antialiased;
+    @apply bg-background font-sans text-foreground antialiased;
+  }
+
+  /* Foco sempre visível, branco como no Spotify. */
+  :focus-visible {
+    @apply outline-2 outline-ring outline-offset-2;
+  }
+
+  /* Barra de rolagem discreta dos painéis. */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: oklch(1 0 0 / 30%) transparent;
+  }
+
+  /* `!important` de propósito: precisa vencer as utilidades de animação/transição
+     de qualquer componente (regra liberada só neste arquivo no biome.json). */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      scroll-behavior: auto !important;
+      transition-property: color, background-color, border-color, opacity !important;
+    }
+  }
+}
+
+@layer utilities {
+  /* Todo número do app: largura fixa por dígito. */
+  .tabular {
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Degradê de cabeçalho de página a partir da cor dominante. */
+  .bg-hero {
+    background: linear-gradient(
+      to bottom,
+      var(--hero) 0%,
+      color-mix(in oklch, var(--hero) 40%, var(--card)) 60%,
+      var(--card) 100%
+    );
   }
 }

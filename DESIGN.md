@@ -159,6 +159,26 @@ apps/web/src/features/<x>/components/ → específicos de um módulo
 | `NowPlayingBar` | Barra do player no rodapé | **Fase 1:** "Tocou por último" (capa, faixa, artista, há quanto tempo) lido do banco. **Fase 2:** vira o player real (controles, progresso, volume). |
 | `SpotifyAttribution` | — | Logo oficial + link "Abrir no Spotify". |
 
+### Onde cada coisa está (implementado na MAD-19)
+
+| Camada | Arquivos |
+|---|---|
+| Tokens | `packages/ui/src/styles/globals.css` (`:root` + `@theme inline`; utilitários `.tabular` e `.bg-hero`) |
+| Primitivos do registry | `packages/ui/src/components/ui/*` — button, tooltip, avatar, dropdown-menu, scroll-area, table, kbd, command, dialog, skeleton, separator, input, input-group, textarea. Fora do Biome (`biome.json`), porque o CLI do shadcn os regenera |
+| `Ds*` | `DsButton` (variantes `primary` · `inverse` · `outline` · `ghost` · `elevated`; tamanhos `sm`…`lg`, `icon-*`, `play`) e `DsChip` (`selected`) em `packages/ui/src/components/ds/` |
+| Domínio | `apps/web/src/components/`: `page-hero`, `filter-chips`, `shelf`, `media-card`, `track-table`, `cover-art`, `estimate-badge`, `coming-soon` |
+| Shell | `apps/web/src/components/shell/`: `app-shell`, `top-bar`, `app-sidebar`, `now-playing-bar`, `mobile-nav`, `search-command`, `nav.ts`, `pathname-boundary` |
+| Vitrine | `/` com dados **fictícios** (`apps/web/src/features/showcase/`) até o Início real da MAD-28 |
+
+Duas regras que a implementação trouxe:
+
+- **Link ativo só via `PathnameBoundary`.** Com Cache Components, `usePathname()`
+  suspende em rotas com parâmetro dinâmico (ex.: `/artistas/[id]`) e quebra o
+  build se não houver `<Suspense>` em volta. O `PathnameBoundary` isola isso;
+  o fallback é a mesma UI sem item ativo.
+- **`CommandDialog` precisa de `<Command>` dentro.** O primitivo Base UI do
+  shadcn não cria a raiz do cmdk; sem ela a paleta quebra ao abrir.
+
 ## Shell da aplicação
 
 Layout do Spotify desktop: moldura preta, painéis `--card` arredondados com

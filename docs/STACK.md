@@ -116,3 +116,9 @@ O stack do flux-finance, copiado.
   Supabase CLI 3.0 como devDependencies. Pacotes internos são consumidos como
   código-fonte TS (sem build), com imports relativos terminando em `.ts` para
   o Deno também conseguir ler.
+- 2026-11-05 — MAD-19 (design system): primitivos Base UI do registry do
+  shadcn (estilo `base-nova`, ícones HugeIcons) em `packages/ui`, Figtree via
+  `next/font/google`. O registry `ui.shadcn.com` está bloqueado na rede desta
+  sessão de nuvem, então os primitivos vieram do `packages/ui` do flux-finance
+  (mesma origem) com o alias trocado; `pnpm --filter @spotme/ui shadcn add …`
+  funciona normalmente fora daqui.

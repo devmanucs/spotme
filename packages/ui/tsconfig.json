@@ -1,7 +1,10 @@
 {
   "extends": "@spotme/config/tsconfig/library.json",
   "compilerOptions": {
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "paths": {
+      "@spotme/ui/*": ["./src/*"]
+    }
   },
   "include": ["src/**/*.ts", "src/**/*.tsx"]
 }

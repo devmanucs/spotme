@@ -23,6 +23,9 @@
 - Rota HTTP nova ou alterada → atualizar a coleção em `bruno/` no mesmo PR.
 - Visual: tema único escuro estilo Spotify; verde (`--primary`) só em
   ação/ativo/progresso. Siga o checklist de `DESIGN.md`.
+- `usePathname()` só dentro de `PathnameBoundary` (Cache Components quebra o
+  build em rotas dinâmicas sem `<Suspense>`).
+- Não edite `packages/ui/src/components/ui/*` à mão: customize em `ds/`.
 
 ## Verificação
 

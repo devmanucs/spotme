@@ -15,7 +15,8 @@
       "!**/dist",
       "!**/coverage",
       "!supabase/.temp",
-      "!supabase/migrations/meta"
+      "!supabase/migrations/meta",
+      "!packages/ui/src/components/ui"
     ]
   },
   "formatter": {
@@ -45,5 +46,17 @@
         "organizeImports": "on"
       }
     }
-  }
+  },
+  "overrides": [
+    {
+      "includes": ["packages/ui/src/styles/globals.css"],
+      "linter": {
+        "rules": {
+          "complexity": {
+            "noImportantStyles": "off"
+          }
+        }
+      }
+    }
+  ]
 }
